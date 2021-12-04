@@ -5,6 +5,7 @@ export default createStore({
   state: {
     error: false,
     prefectures: [],
+    population: [],
   },
   mutations: {
     setError: (state, payload) => (state.error = payload),
