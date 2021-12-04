@@ -1,6 +1,9 @@
 <template>
   <div class="home">
-    <CheckBoxes :prefectures="prefectures" />
+    <CheckBoxes
+      :prefectures="prefectures"
+      @changeCheckedPrefectures="changeCheckedPrefectures"
+    />
   </div>
 </template>
 
@@ -17,6 +20,11 @@ export default {
   },
   mounted() {
     this.$store.dispatch("getPrefectures");
+  },
+  methods: {
+    changeCheckedPrefectures: (checkedPrefectures) => {
+      console.log(checkedPrefectures);
+    },
   },
 };
 </script>
