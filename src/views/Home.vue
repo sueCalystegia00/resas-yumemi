@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <p v-if="error">エラーが出てます</p>
-    <Graph />
+    <Graph :prefCodes="checkedPrefecturesCodes" />
     <CheckBoxes
       :prefectures="prefectures"
       @changeCheckedPrefectures="changeCheckedPrefectures"

@@ -1,12 +1,12 @@
 <template>
-  <div class="graph">ぐらふ</div>
+  <div class="graph">{{ prefCodes }}</div>
 </template>
 
 <script>
 export default {
   name: "Graph",
   props: {
-    prefectures: Array,
+    prefCodes: Array,
   },
 };
 </script>
