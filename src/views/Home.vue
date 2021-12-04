@@ -1,10 +1,16 @@
 <template>
-  <div class="home">Hello World!</div>
+  <div class="home">{{ prefectures }}</div>
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "Home",
-  components: {},
+  computed: {
+    ...mapState(["prefectures"]),
+  },
+  mounted() {
+    this.$store.dispatch("getPrefectures");
+  },
 };
 </script>
