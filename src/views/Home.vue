@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <p v-if="error">エラーが出てます</p>
+    <Graph />
     <CheckBoxes
       :prefectures="prefectures"
       @changeCheckedPrefectures="changeCheckedPrefectures"
@@ -10,10 +11,12 @@
 
 <script>
 import { mapState } from "vuex";
+import Graph from "/src/components/Graph";
 import CheckBoxes from "/src/components/CheckBoxes";
 export default {
   name: "Home",
   components: {
+    Graph,
     CheckBoxes,
   },
   data() {
