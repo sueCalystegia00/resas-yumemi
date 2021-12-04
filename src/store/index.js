@@ -16,12 +16,12 @@ export default createStore({
     /**
      * 都道府県の人口構成データ(総人口)
      */
-    population: [],
+    populations: [],
   },
   mutations: {
     setError: (state, payload) => (state.error = payload),
     setPrefectures: (state, payload) => (state.prefectures = payload),
-    setPopulation: (state, payload) => state.population.push(payload),
+    setPopulations: (state, payload) => state.populations.push(payload),
   },
   actions: {
     /**
@@ -47,9 +47,9 @@ export default createStore({
     /**
      * RESAS API から指定の都道府県の総人口推移データを取得
      * @param {any(VuexContext)} context
-     * @param {object} payload // 都道府県名，都道府県コードを持つオブジェクト
+     * @param {object} payload // 都道府県名(prefName)，都道府県コード(prefCode)を持つオブジェクト
      */
-    getPopulation: async (context, payload) => {
+    getPopulations: async (context, payload) => {
       // 人口構成データの取得
       const response = await axios.get(
         `https://opendata.resas-portal.go.jp/api/v1/population/composition/perYear?cityCode=-&prefCode=${payload.prefCode}`,
@@ -69,7 +69,7 @@ export default createStore({
             data: populationData,
           },
         };
-        context.commit("setPopulation", dataset);
+        context.commit("setPopulations", dataset);
       } else {
         // API通信失敗
         context.commit("setError", true);
