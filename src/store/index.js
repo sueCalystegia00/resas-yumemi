@@ -3,8 +3,19 @@ import { createStore } from "vuex";
 
 export default createStore({
   state: {
+    /**
+     * API通信の成功/失敗を管理
+     * @type {bool}
+     */
     error: false,
+    /**
+     * 都道府県一覧
+     * @type {array}
+     */
     prefectures: [],
+    /**
+     * 都道府県の人口構成データ(総人口)
+     */
     population: [],
   },
   mutations: {
@@ -12,6 +23,10 @@ export default createStore({
     setPrefectures: (state, payload) => (state.prefectures = payload),
   },
   actions: {
+    /**
+     * RESAS API から都道府県一覧を取得
+     * @param {*} context
+     */
     getPrefectures: async (context) => {
       // 都道府県一覧の取得
       const response = await axios.get(
