@@ -15,13 +15,16 @@ export default createStore({
     prefectures: [],
     /**
      * 都道府県の人口構成データ(総人口)
+     * @type {object}
      */
-    populations: [],
+    populations: {},
   },
   mutations: {
     setError: (state, payload) => (state.error = payload),
     setPrefectures: (state, payload) => (state.prefectures = payload),
-    setPopulations: (state, payload) => state.populations.push(payload),
+    setPopulations: (state, payload) => {
+      state.populations[payload.key] = payload.value;
+    },
   },
   actions: {
     /**
@@ -64,7 +67,8 @@ export default createStore({
           (x) => x.value
         );
         const dataset = {
-          [payload.prefCode]: {
+          key: payload.prefCode,
+          value: {
             prefName: payload.prefName,
             data: populationData,
           },
