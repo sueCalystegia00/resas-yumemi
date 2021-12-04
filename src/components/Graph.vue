@@ -4,13 +4,13 @@
       type="chart"
       :options="chartOptions"
       :redrawOnUpdate="true"
-      :oneToOneUpdate="false"
+      :oneToOneUpdate="true"
       :animateOnUpdate="true"
       @rendered="onRender"
       @update="onUpdate"
       @destroy="onDestroy"
     />
-    {{ prefCodes }}
+    {{ seriesData }}
   </div>
 </template>
 
@@ -23,7 +23,7 @@ export default {
     VueHighcharts,
   },
   props: {
-    prefCodes: Array,
+    seriesData: Array,
   },
   computed: {
     chartOptions: () => ({
@@ -40,12 +40,13 @@ export default {
       },
       yAxis: {
         title: {
-          text: "Coin/h",
+          text: "人口数",
         },
+        tickInterval: 500000,
       },
       xAxis: {
         type: "datetime",
-        tickInterval: 86400 * 1000, // 1 day in ms
+        tickInterval: 5,
         labels: {
           rotation: 60,
         },
@@ -61,6 +62,17 @@ export default {
         },
       ],
     }),
+  },
+  methods: {
+    onRender: () => {
+      console.log("Chart rendered");
+    },
+    onUpdate: () => {
+      console.log("Chart updated");
+    },
+    onDestroy: () => {
+      console.log("Chart destroyed");
+    },
   },
 };
 </script>

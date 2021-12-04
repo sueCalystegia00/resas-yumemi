@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <p v-if="error">エラーが出てます</p>
-    <Graph :prefCodes="checkedPrefecturesCodes" />
+    <Graph :seriesData="getCheckdPopulations(checkedPrefecturesCodes)" />
     <CheckBoxes
       :prefectures="prefectures"
       @changeCheckedPrefectures="changeCheckedPrefectures"
@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapGetters } from "vuex";
 import Graph from "/src/components/Graph";
 import CheckBoxes from "/src/components/CheckBoxes";
 export default {
@@ -26,6 +26,7 @@ export default {
   },
   computed: {
     ...mapState(["error", "prefectures", "populations"]),
+    ...mapGetters(["getCheckdPopulations"]),
   },
   mounted() {
     this.$store.dispatch("getPrefectures");
