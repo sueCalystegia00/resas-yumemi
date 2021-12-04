@@ -3,14 +3,34 @@ import { createStore } from "vuex";
 
 export default createStore({
   state: {
+    /**
+     * API通信の成功/失敗を管理
+     * @type {bool}
+     */
     error: false,
+    /**
+     * 都道府県一覧
+     * @type {array}
+     */
     prefectures: [],
+    /**
+     * 都道府県の人口構成データ(総人口)
+     * @type {object}
+     */
+    populations: {},
   },
   mutations: {
     setError: (state, payload) => (state.error = payload),
     setPrefectures: (state, payload) => (state.prefectures = payload),
+    setPopulations: (state, payload) => {
+      state.populations[payload.key] = payload.value;
+    },
   },
   actions: {
+    /**
+     * RESAS API から都道府県一覧を取得
+     * @param {any(VuexContext)} context
+     */
     getPrefectures: async (context) => {
       // 都道府県一覧の取得
       const response = await axios.get(
@@ -22,6 +42,38 @@ export default createStore({
       if (response.data.message === null) {
         // 正常
         context.commit("setPrefectures", response.data.result);
+      } else {
+        // API通信失敗
+        context.commit("setError", true);
+      }
+    },
+    /**
+     * RESAS API から指定の都道府県の総人口推移データを取得
+     * @param {any(VuexContext)} context
+     * @param {object} payload // 都道府県名(prefName)，都道府県コード(prefCode)を持つオブジェクト
+     */
+    getPopulations: async (context, payload) => {
+      // 人口構成データの取得
+      const response = await axios.get(
+        `https://opendata.resas-portal.go.jp/api/v1/population/composition/perYear?cityCode=-&prefCode=${payload.prefCode}`,
+        {
+          headers: { "X-API-KEY": process.env.VUE_APP_RESAS_API_KEY },
+        }
+      );
+      if (response.data.message === null) {
+        // 正常
+        // 総人口の値のみを配列として取り出す
+        const populationData = response.data.result.data[0].data.map(
+          (x) => x.value
+        );
+        const dataset = {
+          key: payload.prefCode,
+          value: {
+            prefName: payload.prefName,
+            data: populationData,
+          },
+        };
+        context.commit("setPopulations", dataset);
       } else {
         // API通信失敗
         context.commit("setError", true);

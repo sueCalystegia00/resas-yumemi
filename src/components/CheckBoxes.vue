@@ -30,10 +30,7 @@ export default {
   },
   watch: {
     checkedPrefectures() {
-      const prefCodes = this.checkedPrefectures.map(
-        (prefecture) => prefecture.prefCode
-      );
-      console.log(prefCodes);
+      this.$emit("changeCheckedPrefectures", this.checkedPrefectures);
     },
   },
 };
