@@ -4,9 +4,9 @@
       type="chart"
       :options="chartOptions"
       :redrawOnUpdate="true"
-      :oneToOneUpdate="true"
+      :oneToOneUpdate="false"
       :animateOnUpdate="true"
-      @rendered="onRender"
+      @updated="onUpdated"
     />
     {{ seriesData }}
   </div>
@@ -14,6 +14,7 @@
 
 <script>
 import VueHighcharts from "vue3-highcharts";
+import { toRefs, computed } from "vue";
 
 export default {
   name: "Graph",
@@ -23,41 +24,45 @@ export default {
   props: {
     seriesData: Array,
   },
-  computed: {
-    chartOptions() {
-      return {
+  setup(props) {
+    const { seriesData } = toRefs(props);
+    const chartOptions = computed(() => ({
+      chart: {
+        type: "line",
+      },
+      title: {
+        text: "総人口推移",
+        style: {
+          "font-family": "Avenir, Helvetica, Arial, sans-serif",
+          "-webkit-font-smoothing": "antialiased",
+          "-moz-osx-font-smoothing": "grayscale",
+          color: "#2c3e50",
+          "font-weight": "bold",
+          "font-size": "200%",
+        },
+      },
+      yAxis: {
         title: {
-          text: "都道府県別総人口推移",
-          style: {
-            "font-family": "Avenir, Helvetica, Arial, sans-serif",
-            "-webkit-font-smoothing": "antialiased",
-            "-moz-osx-font-smoothing": "grayscale",
-            color: "#2c3e50",
-            "font-weight": "bold",
-            "font-size": "200%",
-          },
+          text: "人口数",
         },
-        yAxis: {
-          title: {
-            text: "人口数",
-          },
-          tickInterval: 500000,
+        tickInterval: 500000,
+      },
+      xAxis: {
+        type: "datetime",
+        tickInterval: 5,
+        labels: {
+          rotation: 60,
         },
-        xAxis: {
-          type: "datetime",
-          tickInterval: 5,
-          labels: {
-            rotation: 60,
-          },
-        },
-        series: this.seriesData,
-      };
-    },
-  },
-  methods: {
-    onRender() {
-      console.log("Chart rendered");
-    },
+      },
+      series: seriesData.value,
+    }));
+    const onUpdated = () => {
+      console.log("Chart updated");
+    };
+    return {
+      chartOptions,
+      onUpdated,
+    };
   },
 };
 </script>
