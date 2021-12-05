@@ -7,8 +7,6 @@
       :oneToOneUpdate="true"
       :animateOnUpdate="true"
       @rendered="onRender"
-      @update="onUpdate"
-      @destroy="onDestroy"
     />
     {{ seriesData }}
   </div>
@@ -52,28 +50,13 @@ export default {
             rotation: 60,
           },
         },
-        series: [
-          {
-            name: "ETH",
-            data: [],
-          },
-          {
-            name: "BTC",
-            data: [],
-          },
-        ],
+        series: this.seriesData,
       };
     },
   },
   methods: {
-    onRender: () => {
+    onRender() {
       console.log("Chart rendered");
-    },
-    onUpdate: () => {
-      console.log("Chart updated");
-    },
-    onDestroy: () => {
-      console.log("Chart destroyed");
     },
   },
 };
