@@ -19,6 +19,11 @@ export default createStore({
      */
     populations: {},
   },
+  getters: {
+    getCheckdPopulations: (state) => (prefCodes) => {
+      return prefCodes.map((prefCode) => state.populations[prefCode]);
+    },
+  },
   mutations: {
     setError: (state, payload) => (state.error = payload),
     setPrefectures: (state, payload) => (state.prefectures = payload),
@@ -69,7 +74,7 @@ export default createStore({
         const dataset = {
           key: payload.prefCode,
           value: {
-            prefName: payload.prefName,
+            name: payload.prefName,
             data: populationData,
           },
         };
