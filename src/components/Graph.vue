@@ -8,9 +8,8 @@
       :animateOnUpdate="true"
       @rendered="onRender"
       @updated="onUpdated"
-      :key="resetKey"
+      :key="reloadKey"
     />
-    {{ seriesData }}
   </div>
 </template>
 
@@ -27,7 +26,7 @@ export default {
   },
   data() {
     return {
-      resetKey: 0,
+      reloadKey: false,
     };
   },
   computed: {
@@ -67,7 +66,7 @@ export default {
     },
     onUpdated() {
       console.log("Chart updated");
-      this.resetKey++;
+      this.reloadKey = !this.reloadKey;
     },
   },
 };
