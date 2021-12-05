@@ -32,13 +32,15 @@ export default {
     this.$store.dispatch("getPrefectures");
   },
   methods: {
-    changeCheckedPrefectures(checkedPrefectures) {
-      this.checkedPrefecturesCodes = checkedPrefectures.map((pref) => {
-        if (!this.populations[pref.prefCode]) {
-          this.$store.dispatch("getPopulations", pref);
-        }
-        return pref.prefCode;
-      });
+    async changeCheckedPrefectures(checkedPrefectures) {
+      this.checkedPrefecturesCodes = await Promise.all(
+        checkedPrefectures.map(async (pref) => {
+          if (!this.populations[pref.prefCode]) {
+            await this.$store.dispatch("getPopulations", pref);
+          }
+          return pref.prefCode;
+        })
+      );
     },
   },
 };
