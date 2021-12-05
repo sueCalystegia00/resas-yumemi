@@ -7,6 +7,7 @@
       :oneToOneUpdate="true"
       :animateOnUpdate="true"
       @rendered="onRender"
+      @updated="onUpdated"
     />
     {{ seriesData }}
   </div>
@@ -27,7 +28,7 @@ export default {
     chartOptions() {
       return {
         title: {
-          text: "都道府県別総人口推移",
+          text: "総人口推移",
           style: {
             "font-family": "Avenir, Helvetica, Arial, sans-serif",
             "-webkit-font-smoothing": "antialiased",
@@ -57,6 +58,9 @@ export default {
   methods: {
     onRender() {
       console.log("Chart rendered");
+    },
+    onUpdated() {
+      console.log("Chart updated");
     },
   },
 };
