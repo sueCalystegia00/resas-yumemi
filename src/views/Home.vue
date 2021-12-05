@@ -21,6 +21,9 @@ export default {
   },
   data() {
     return {
+      /**
+       * @type {number[]} チェックボックスで指定された都道府県の都道府県コード
+       */
       checkedPrefecturesCodes: [],
     };
   },
@@ -32,6 +35,10 @@ export default {
     this.$store.dispatch("getPrefectures");
   },
   methods: {
+    /**
+     * チェックが付いた都道府県コードの更新と，未取得データに対するAPIの発火
+     * @param {object[]} checkedPrefectures - チェックが付いた都道府県のデータ
+     */
     async changeCheckedPrefectures(checkedPrefectures) {
       this.checkedPrefecturesCodes = await Promise.all(
         checkedPrefectures.map(async (pref) => {

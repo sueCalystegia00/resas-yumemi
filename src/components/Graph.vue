@@ -28,14 +28,23 @@ export default {
     VueHighcharts,
   },
   props: {
+    /**
+     * @type {object[]} グラフ描画に用いるデータ
+     */
     seriesData: Array,
   },
   data() {
     return {
+      /**
+       * @type {bool} グラフ再描画のためのキー，T/Fは全く関係ない．
+       */
       reloadKey: false,
     };
   },
   computed: {
+    /**
+     * @return {object} highchartsに渡すグラフ描画情報
+     */
     chartOptions() {
       return {
         title: {
@@ -83,9 +92,15 @@ export default {
     },
   },
   methods: {
+    /**
+     * 最初にhighchartsが描画されたら発火する
+     */
     onRender() {
       //console.log("Chart rendered");
     },
+    /**
+     * highchartsに渡すoptionが更新されたら発火される(reloadKeyで強制的に再描画している)
+     */
     onUpdated() {
       //console.log("Chart updated");
       this.reloadKey = !this.reloadKey;

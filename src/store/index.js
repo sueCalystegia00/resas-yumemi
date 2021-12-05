@@ -10,7 +10,7 @@ export default createStore({
     error: false,
     /**
      * 都道府県一覧
-     * @type {array}
+     * @type {object[]}
      */
     prefectures: [],
     /**
@@ -20,6 +20,11 @@ export default createStore({
     populations: {},
   },
   getters: {
+    /**
+     * 引数のコード配列に対応する都道府県の総人口推移データを返す
+     * @param {number[]} prefCodes - 都道府県コードの配列
+     * @returns {object[]} 該当都道府県の総人口推移データの配列
+     */
     getCheckdPopulations: (state) => (prefCodes) => {
       return prefCodes.map((prefCode) => state.populations[prefCode]);
     },
@@ -34,7 +39,7 @@ export default createStore({
   actions: {
     /**
      * RESAS API から都道府県一覧を取得
-     * @param {any(VuexContext)} context
+     * @param {VuexContext} context
      */
     getPrefectures: async (context) => {
       // 都道府県一覧の取得
@@ -54,8 +59,8 @@ export default createStore({
     },
     /**
      * RESAS API から指定の都道府県の総人口推移データを取得
-     * @param {any(VuexContext)} context
-     * @param {object} payload // 都道府県名(prefName)，都道府県コード(prefCode)を持つオブジェクト
+     * @param {VuexContext} context
+     * @param {object} payload - 都道府県名(prefName)，都道府県コード(prefCode)を持つオブジェクト
      */
     getPopulations: async (context, payload) => {
       // 人口構成データの取得

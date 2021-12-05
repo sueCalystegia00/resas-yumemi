@@ -26,14 +26,23 @@
 export default {
   name: "CheckBoxes",
   props: {
+    /**
+     * @type {object[]} RESAS APIから取得した都道府県データの配列
+     */
     prefectures: Array,
   },
   data() {
     return {
+      /**
+       * @type {array} チェックを付けた都道府県の都道府県コード(prefCode)の配列
+       */
       checkedPrefectures: [],
     };
   },
   computed: {
+    /**
+     * @return {object[]} 都道府県データを地域区分した配列
+     */
     regions() {
       return this.prefectures.reduce(
         (acc, pref) => {
@@ -67,6 +76,9 @@ export default {
     },
   },
   watch: {
+    /**
+     * チェックボックスの状態が変わったらemit
+     */
     checkedPrefectures() {
       this.$emit("changeCheckedPrefectures", this.checkedPrefectures);
     },
