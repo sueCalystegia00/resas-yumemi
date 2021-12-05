@@ -26,42 +26,44 @@ export default {
     seriesData: Array,
   },
   computed: {
-    chartOptions: () => ({
-      title: {
-        text: "都道府県別総人口推移",
-        style: {
-          "font-family": "Avenir, Helvetica, Arial, sans-serif",
-          "-webkit-font-smoothing": "antialiased",
-          "-moz-osx-font-smoothing": "grayscale",
-          color: "#2c3e50",
-          "font-weight": "bold",
-          "font-size": "200%",
-        },
-      },
-      yAxis: {
+    chartOptions() {
+      return {
         title: {
-          text: "人口数",
+          text: "都道府県別総人口推移",
+          style: {
+            "font-family": "Avenir, Helvetica, Arial, sans-serif",
+            "-webkit-font-smoothing": "antialiased",
+            "-moz-osx-font-smoothing": "grayscale",
+            color: "#2c3e50",
+            "font-weight": "bold",
+            "font-size": "200%",
+          },
         },
-        tickInterval: 500000,
-      },
-      xAxis: {
-        type: "datetime",
-        tickInterval: 5,
-        labels: {
-          rotation: 60,
+        yAxis: {
+          title: {
+            text: "人口数",
+          },
+          tickInterval: 500000,
         },
-      },
-      series: [
-        {
-          name: "ETH",
-          data: [],
+        xAxis: {
+          type: "datetime",
+          tickInterval: 5,
+          labels: {
+            rotation: 60,
+          },
         },
-        {
-          name: "BTC",
-          data: [],
-        },
-      ],
-    }),
+        series: [
+          {
+            name: "ETH",
+            data: [],
+          },
+          {
+            name: "BTC",
+            data: [],
+          },
+        ],
+      };
+    },
   },
   methods: {
     onRender: () => {
