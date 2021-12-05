@@ -121,7 +121,7 @@ export default {
 }
 
 .dialog {
-  position: fixed;
+  position: absolute;
   top: 55px;
   width: 100%;
   height: 340px;
