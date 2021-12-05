@@ -8,6 +8,7 @@
       :animateOnUpdate="true"
       @rendered="onRender"
       @updated="onUpdated"
+      :key="resetKey"
     />
     {{ seriesData }}
   </div>
@@ -23,6 +24,11 @@ export default {
   },
   props: {
     seriesData: Array,
+  },
+  data() {
+    return {
+      resetKey: 0,
+    };
   },
   computed: {
     chartOptions() {
@@ -61,6 +67,7 @@ export default {
     },
     onUpdated() {
       console.log("Chart updated");
+      this.resetKey++;
     },
   },
 };
